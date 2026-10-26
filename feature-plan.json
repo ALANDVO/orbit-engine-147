@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "current_feature": "core-api-skeleton",
+  "features": [
+    {
+      "id": "core-api-skeleton",
+      "title": "FastAPI core skeleton with health endpoint and Postgres connection",
+      "status": "done",
+      "acceptance": [
+        "FastAPI app starts and serves /health endpoint",
+        "Postgres connection pool configured via environment",
+        "Basic project structure with requirements.txt"
+      ],
+      "implementation": [
+        "app/main.py",
+        "app/config.py",
+        "app/database.py",
+        "requirements.txt"
+      ],
+      "tests": [
+        "tests/test_health.py"
+      ]
+    },
+    {
+      "id": "auth-otp-sms",
+      "title": "SMS OTP with newline support for WebOTP API (issue #6435)",
+      "status": "planned",
+      "acceptance": [
+        "SMS template accepts literal newlines",
+        "Generated SMS contains newline for WebOTP compatibility"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "storage-cors-fix",
+      "title": "Fix __cf_bm cookie rejection on storage assets (issue #37312)",
+      "status": "planned",
+      "acceptance": [
+        "Storage asset responses don't trigger invalid domain cookie errors"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "postgrest-schema-init",
+      "title": "Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)",
+      "status": "planned",
+      "acceptance": [
+        "Fresh project initializes without schema missing errors"
+      ],
+      "implementation": [],
+      "tests": []
+    }
+  ]
+}
