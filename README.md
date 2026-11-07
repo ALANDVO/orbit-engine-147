@@ -59,3 +59,7 @@ orbit-engine-147/
 - [ ] Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)
 
 Maintainer: Alan Vo <alanvo@gmail.com>
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

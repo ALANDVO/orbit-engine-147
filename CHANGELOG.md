@@ -56,3 +56,7 @@ All notable changes to this project will be documented in this file.
 - All tests pass (2/2)
 - Health endpoint returns proper structure with/without database
 - Root endpoint returns application metadata
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)
