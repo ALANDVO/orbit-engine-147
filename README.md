@@ -34,9 +34,11 @@ orbit-engine-147/
 │   ├── __init__.py
 │   ├── main.py          # FastAPI application
 │   ├── config.py        # Configuration management
-│   └── database.py      # Database connection pool
+│   ├── database.py      # Database connection pool
+│   └── auth.py          # SMS OTP authentication
 ├── tests/
-│   └── test_health.py   # Health endpoint tests
+│   ├── test_health.py   # Health endpoint tests
+│   └── test_auth.py     # SMS OTP authentication tests
 ├── requirements.txt
 ├── .env.example
 ├── feature-plan.json
@@ -49,10 +51,10 @@ orbit-engine-147/
 - [x] Health check endpoint with database connectivity
 - [x] PostgreSQL connection pooling
 - [x] Configuration via environment variables
+- [x] SMS OTP with newline support for WebOTP API (issue #6435)
 
 ## Planned Features
 
-- [ ] SMS OTP with newline support for WebOTP API (issue #6435)
 - [ ] Fix __cf_bm cookie rejection on storage assets (issue #37312)
 - [ ] Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)
 

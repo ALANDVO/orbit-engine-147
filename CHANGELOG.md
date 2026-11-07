@@ -1,8 +1,27 @@
 # Changelog
 
-## 1.1.0 — work-in-progress checkpoint
+## 1.2.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.1.0 — work-in-progress checkpoint (2026-11-07)
+
+### Added
+- SMS OTP authentication with WebOTP API support (issue #6435)
+- SMS template rendering with literal newline support for WebOTP compliance
+- OTP generation, validation, and verification with expiry handling
+- Phone number validation (E.164 format)
+- Comprehensive test suite for SMS OTP functionality (20 tests)
+
+### Implementation Files
+- `app/auth.py` - SMS OTP service with WebOTP-compatible template rendering
+- `tests/test_auth.py` - SMS OTP authentication tests (20 tests)
+
+### Testing
+- All tests pass (22/22)
+- SMS template accepts literal newlines and multiline content
+- Generated SMS contains newlines for WebOTP compatibility
+- OTP generation, verification, and expiry work correctly
 
 ## 1.0.0 — work-in-progress checkpoint
 
