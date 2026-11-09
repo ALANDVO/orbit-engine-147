@@ -1,13 +1,66 @@
 {
   "schema_version": 1,
-  "current_feature": "continue-implementation",
+  "current_feature": "storage-cors-fix",
   "features": [
     {
-      "id": "continue-implementation",
-      "title": "Continue implementation and resolve known failures",
-      "status": "in_progress",
+      "id": "core-api-skeleton",
+      "title": "FastAPI core skeleton with health endpoint and Postgres connection",
+      "status": "done",
       "acceptance": [
-        "Run checks, fix failures, and implement the next planned feature"
+        "FastAPI app starts and serves /health endpoint",
+        "Postgres connection pool configured via environment",
+        "Basic project structure with requirements.txt"
+      ],
+      "implementation": [
+        "app/main.py",
+        "app/config.py",
+        "app/database.py",
+        "requirements.txt"
+      ],
+      "tests": [
+        "tests/test_health.py"
+      ]
+    },
+    {
+      "id": "auth-otp-sms",
+      "title": "SMS OTP with newline support for WebOTP API (issue #6435)",
+      "status": "done",
+      "acceptance": [
+        "SMS template accepts literal newlines",
+        "Generated SMS contains newline for WebOTP compatibility"
+      ],
+      "implementation": [
+        "app/auth.py",
+        "tests/test_auth.py"
+      ],
+      "tests": [
+        "tests/test_auth.py"
+      ]
+    },
+    {
+      "id": "storage-cors-fix",
+      "title": "Fix __cf_bm cookie rejection on storage assets (issue #37312)",
+      "status": "done",
+      "acceptance": [
+        "Storage asset responses don't trigger invalid domain cookie errors",
+        "CORS headers include Access-Control-Allow-Credentials: false",
+        "No Set-Cookie headers on asset responses",
+        "Proper Vary: Origin header for caching"
+      ],
+      "implementation": [
+        "app/storage.py",
+        "app/main.py"
+      ],
+      "tests": [
+        "tests/test_storage.py"
+      ]
+    },
+    {
+      "id": "postgrest-schema-init",
+      "title": "Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)",
+      "status": "planned",
+      "acceptance": [
+        "Fresh project initializes without schema missing errors"
       ],
       "implementation": [],
       "tests": []

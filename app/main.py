@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import init_db, close_db, get_connection
+from app.storage import router as storage_router
 
 
 @asynccontextmanager
@@ -20,6 +21,8 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+app.include_router(storage_router)
 
 
 @app.get("/health")

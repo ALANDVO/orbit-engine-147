@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.3.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.3.0 — work-in-progress checkpoint (2026-11-09)
+
+### Added
+- Storage assets module with CORS fix for Cloudflare __cf_bm cookie rejection (issue #37312)
+- Storage endpoints: `/storage/v1/render/image/public/{path}` and `/storage/v1/object/public/{bucket}/{path}`
+- CORS preflight (OPTIONS) and HEAD support for storage assets
+- Security: Path traversal protection for asset serving
+- Proper CORS headers: `Access-Control-Allow-Credentials: false`, `Vary: Origin`, no Set-Cookie
+- Comprehensive test suite for storage assets (12 tests)
+
+### Implementation Files
+- `app/storage.py` - Storage assets module with CORS fix
+- `app/main.py` - Updated to include storage router
+- `tests/test_storage.py` - Storage assets tests (12 tests)
+
+### Testing
+- All tests pass (34/34)
+- CORS headers prevent __cf_bm cookie rejection
+- Asset serving works for images and generic objects
+- Path traversal attempts blocked
+- No Set-Cookie headers on asset responses
+
 ## 1.2.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
