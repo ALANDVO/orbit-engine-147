@@ -25,6 +25,10 @@ The API will be available at `http://localhost:8000`.
 
 - `GET /` - Application info
 - `GET /health` - Health check with database connectivity
+- `GET /storage/v1/render/image/public/{path}` - Serve public image assets (issue #37312)
+- `GET /storage/v1/object/public/{bucket}/{path}` - Serve public objects from bucket
+- `OPTIONS /storage/v1/{path}` - CORS preflight for storage assets
+- `HEAD /storage/v1/{path}` - HEAD requests for storage assets
 
 ## Project Structure
 
@@ -35,10 +39,12 @@ orbit-engine-147/
 │   ├── main.py          # FastAPI application
 │   ├── config.py        # Configuration management
 │   ├── database.py      # Database connection pool
-│   └── auth.py          # SMS OTP authentication
+│   ├── auth.py          # SMS OTP authentication
+│   └── storage.py       # Storage assets with CORS fix
 ├── tests/
 │   ├── test_health.py   # Health endpoint tests
-│   └── test_auth.py     # SMS OTP authentication tests
+│   ├── test_auth.py     # SMS OTP authentication tests
+│   └── test_storage.py  # Storage assets tests (issue #37312)
 ├── requirements.txt
 ├── .env.example
 ├── feature-plan.json
@@ -52,10 +58,10 @@ orbit-engine-147/
 - [x] PostgreSQL connection pooling
 - [x] Configuration via environment variables
 - [x] SMS OTP with newline support for WebOTP API (issue #6435)
+- [x] Storage assets with CORS fix for __cf_bm cookie rejection (issue #37312)
 
 ## Planned Features
 
-- [ ] Fix __cf_bm cookie rejection on storage assets (issue #37312)
 - [ ] Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)
 
 Maintainer: Alan Vo <alanvo@gmail.com>
