@@ -18,6 +18,11 @@ async def init_db() -> None:
         max_size=settings.database_pool_size,
         command_timeout=60,
     )
+    # Ensure PostgREST schema exists to avoid missing schema errors
+    async with _pool.acquire() as conn:
+        await conn.execute(
+            "CREATE SCHEMA IF NOT EXISTS pg_pgrst_no_exposed_schemas"
+        )
 
 
 async def close_db() -> None:
