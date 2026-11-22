@@ -49,10 +49,14 @@ Tests: `tests/test_storage.py`
 
 ### postgrest-schema-init — Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Fresh project initializes without schema missing errors
+
+Implementation: `app/database.py`
+
+Tests: `tests/test_database.py`
 
 ---
 
