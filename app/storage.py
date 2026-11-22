@@ -9,6 +9,22 @@ import mimetypes
 router = APIRouter(prefix="/storage/v1", tags=["storage"])
 mimetypes.init()
 
+def is_within(base: str, target: str) -> bool:
+    """Return True only if target resolves to a path inside base.
+
+    Both paths are fully resolved with symlinks followed, then compared by
+    path component (not raw string prefix) so a link inside the assets tree
+    cannot escape it and a sibling like ``/root-evil`` is not treated as a
+    child of ``/root``.
+    """
+    base_real = os.path.realpath(base)
+    target_real = os.path.realpath(target)
+    try:
+        return os.path.commonpath([base_real, target_real]) == base_real
+    except ValueError:
+        # Different drives / no common path on the platform.
+        return False
+
 class StorageConfig:
     assets_root: str = "/var/lib/storage/assets"
     public_path: str = "public"
@@ -37,9 +53,9 @@ async def storage_head(path: str, origin: Optional[str] = Header(None)):
 @router.get("/render/image/public/{path:path}")
 async def render_image_public(path: str, request: Request, origin: Optional[str] = Header(None)):
     headers = get_cors_headers(origin)
-    file_path = os.path.normpath(os.path.join(StorageConfig.assets_root, StorageConfig.public_path, path))
-    assets_root_norm = os.path.normpath(os.path.join(StorageConfig.assets_root, StorageConfig.public_path))
-    if not file_path.startswith(assets_root_norm):
+    file_path = os.path.join(StorageConfig.assets_root, StorageConfig.public_path, path)
+    assets_root_norm = os.path.join(StorageConfig.assets_root, StorageConfig.public_path)
+    if not is_within(assets_root_norm, file_path):
         return JSONResponse(status_code=403, content={"error": "Forbidden"}, headers=headers)
     if not os.path.isfile(file_path):
         return JSONResponse(status_code=404, content={"error": "Not found"}, headers=headers)
@@ -53,9 +69,9 @@ async def render_image_public(path: str, request: Request, origin: Optional[str]
 @router.get("/object/public/{bucket}/{path:path}")
 async def object_public(bucket: str, path: str, request: Request, origin: Optional[str] = Header(None)):
     headers = get_cors_headers(origin)
-    file_path = os.path.normpath(os.path.join(StorageConfig.assets_root, bucket, path))
-    bucket_root_norm = os.path.normpath(os.path.join(StorageConfig.assets_root, bucket))
-    if not file_path.startswith(bucket_root_norm):
+    file_path = os.path.join(StorageConfig.assets_root, bucket, path)
+    bucket_root_norm = os.path.join(StorageConfig.assets_root, bucket)
+    if not is_within(bucket_root_norm, file_path):
         return JSONResponse(status_code=403, content={"error": "Forbidden"}, headers=headers)
     if not os.path.isfile(file_path):
         return JSONResponse(status_code=404, content={"error": "Not found"}, headers=headers)
@@ -96,9 +112,9 @@ def get_test_router():
     @test_router.get("/render/image/public/{path:path}")
     async def test_render_image_public(path: str, request: Request, origin: Optional[str] = Header(None)):
         headers = get_cors_headers(origin)
-        file_path = os.path.normpath(os.path.join(TestStorageConfig.assets_root, TestStorageConfig.public_path, path))
-        assets_root_norm = os.path.normpath(os.path.join(TestStorageConfig.assets_root, TestStorageConfig.public_path))
-        if not file_path.startswith(assets_root_norm):
+        file_path = os.path.join(TestStorageConfig.assets_root, TestStorageConfig.public_path, path)
+        assets_root_norm = os.path.join(TestStorageConfig.assets_root, TestStorageConfig.public_path)
+        if not is_within(assets_root_norm, file_path):
             return JSONResponse(status_code=403, content={"error": "Forbidden"}, headers=headers)
         if not os.path.isfile(file_path):
             return JSONResponse(status_code=404, content={"error": "Not found"}, headers=headers)
@@ -111,9 +127,9 @@ def get_test_router():
     @test_router.get("/object/public/{bucket}/{path:path}")
     async def test_object_public(bucket: str, path: str, request: Request, origin: Optional[str] = Header(None)):
         headers = get_cors_headers(origin)
-        file_path = os.path.normpath(os.path.join(TestStorageConfig.assets_root, bucket, path))
-        bucket_root_norm = os.path.normpath(os.path.join(TestStorageConfig.assets_root, bucket))
-        if not file_path.startswith(bucket_root_norm):
+        file_path = os.path.join(TestStorageConfig.assets_root, bucket, path)
+        bucket_root_norm = os.path.join(TestStorageConfig.assets_root, bucket)
+        if not is_within(bucket_root_norm, file_path):
             return JSONResponse(status_code=403, content={"error": "Forbidden"}, headers=headers)
         if not os.path.isfile(file_path):
             return JSONResponse(status_code=404, content={"error": "Not found"}, headers=headers)
