@@ -58,12 +58,16 @@
     {
       "id": "postgrest-schema-init",
       "title": "Ensure pg_pgrst_no_exposed_schemas exists on project init (issue #40617)",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Fresh project initializes without schema missing errors"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "app/database.py"
+      ],
+      "tests": [
+        "tests/test_database.py"
+      ]
     }
   ]
 }
